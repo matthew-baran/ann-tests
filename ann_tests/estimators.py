@@ -1,8 +1,10 @@
 from sklearn.neural_network import MLPRegressor
 import numpy as np
 
+
 def get():
-    return [
+
+    estimator_list = [
         MLPRegressor(hidden_layer_sizes=(5, 5),
                      learning_rate_init=0.01,
                      early_stopping=True),
@@ -11,7 +13,12 @@ def get():
                      learning_rate_init=0.01,
                      early_stopping=True),
 
-        MLPRegressor(hidden_layer_sizes=np.full(25, 5),
+        MLPRegressor(hidden_layer_sizes=np.full(20, 5),
                      learning_rate_init=0.01,
                      early_stopping=True)
     ]
+
+    descriptions = ["5 neurons, 2 layers",
+                    "50 neurons, 2 layers", "5 neurons, 20 layers"]
+
+    return estimator_list, descriptions
