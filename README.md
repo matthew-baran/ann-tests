@@ -3,6 +3,7 @@ This module runs several tests on a multilayer perceptron (MLP) regression fit. 
 
 ## Installation
 ```
-pip install -r requirements.txt
+conda create -n <env> --file requirements.txt
+conda activate <env>
 python ann_tests/run_tests.py
 ```
