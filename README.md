@@ -3,6 +3,6 @@ This module runs several tests on a multilayer perceptron (MLP) regression fit. 
 
 ## Installation
 ```
-pip install requirements.txt
+pip install -r requirements.txt
 python ann_tests/run_tests.py
 ```
