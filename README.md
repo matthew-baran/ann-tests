@@ -9,15 +9,15 @@ python ann_tests/run_tests.py
 ```
 
 ## Test options
-Three tests are available.  'basic' is a test of three ANN architectures with different amounts of training data.  'extrap' is a test of input values outside of the training data range.  'interp' is a test of input values within a subset of the training data range which was excluded from training.
+Three tests are available.  'basic' is a test of three ANN architectures with different amounts of training data.  'extrap' is a test of input values outside of the training data range.  'interp' is a test of input values within a subset of the training data range which was excluded from training. 'dim' is a test of increasing dimensionality of the input features.
 
 ```
-usage: run_tests.py [-h] [--test {extrap,basic,interp,all}]
+usage: run_tests.py [-h] [--test {interp,extrap,basic,dim,all}]
 
 Run ANN regression tests
 
 optional arguments:
   -h, --help            show this help message and exit
-  --test {extrap,basic,interp,all}
+  --test {interp,extrap,basic,dim,all}
                         Test mode
 ```
