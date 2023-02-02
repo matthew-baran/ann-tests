@@ -8,22 +8,22 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        shell: bash -el {0}
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-    - name: Set up Python
-      uses: actions/setup-python@v3
+    - name: Setup environment
+      uses: conda-incubator/setup-miniconda@v2.2.0
       with:
-        python-version: "3.11"
-    - name: Install dependencies
+        environment-file: environment.yml
+        activate-environment: ann-tests
+        auto-activate-base: false
+    - name: Run code checks
       run: |
-        $CONDA/bin/conda env update -f environment.yml --name base
-    - name: Check for code lint with flake8
-      run: |
+        conda activate ann-tests
         flake8 .
-    - name: Check code formatting with black
-      run: |
         black --check .
-    - name: Check dependency sorting with isort
-      run: |
         isort --check .
