@@ -1,12 +1,7 @@
 
 name: ANN Tests Automated Build
 
-on:
-  pull_request:
-    branches: [ $default-branch ]
-
-permissions:
-  contents: read
+on: [push]
 
 jobs:
   build:
