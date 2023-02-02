@@ -1,0 +1,15 @@
+name: ann-tests
+channels:
+  - defaults
+dependencies:
+  - python
+  - matplotlib
+  - numpy
+  - scikit-learn
+  - ca-certificates
+  - openssl
+  - pip
+  - pip:
+    - flake8
+    - black
+    - isort
