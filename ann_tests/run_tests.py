@@ -6,14 +6,44 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPRegressor
 
-import estimators
+
+class Estimator:
+    name = ""
+    model = None
+
+    def __init__(self, name, model):
+        self.name = name
+        self.model = model
 
 
-def annStructureTest():
+def get_estimators():
+    return [
+        Estimator(
+            "5 neurons, 2 layers",
+            MLPRegressor(
+                hidden_layer_sizes=np.array([5, 5]), learning_rate_init=0.01, early_stopping=True
+            ),
+        ),
+        Estimator(
+            "50 neurons, 2 layers",
+            MLPRegressor(
+                hidden_layer_sizes=np.array([50, 50]), learning_rate_init=0.01, early_stopping=True
+            ),
+        ),
+        Estimator(
+            "5 neurons, 20 layers",
+            MLPRegressor(
+                hidden_layer_sizes=np.full(20, 5), learning_rate_init=0.01, early_stopping=True
+            ),
+        ),
+    ]
+
+
+def ann_structure_test():
     sample_list = np.array([1e3, 1e4, 1e5], dtype=int)
-    estimator_list, descriptions = estimators.get()
 
-    figure, ax_list = plt.subplots(len(sample_list), len(estimator_list), sharex=True, sharey=True)
+    estimators = get_estimators()
+    figure, ax_list = plt.subplots(len(sample_list), len(estimators), sharex=True, sharey=True)
     figure.suptitle("ANN regression fit of $y=x^2$")
 
     for sample_idx, num_samples in enumerate(sample_list):
@@ -24,20 +54,14 @@ def annStructureTest():
 
         ax_list[sample_idx, 0].set_ylabel(str(len(X_train)) + " training samples")
 
-        for estimator_idx, est in enumerate(estimator_list):
-            print(
-                "Training with "
-                + str(len(X_train))
-                + " samples and "
-                + descriptions[estimator_idx]
-                + "..."
-            )
+        for estimator_idx, estimator in enumerate(estimators):
+            print("Training with " + str(len(X_train)) + " samples and " + estimator.name + "...")
 
             tic = time()
-            est.fit(X_train, y_train)
+            estimator.model.fit(X_train, y_train)
             print("done in {:.3f}s".format(time() - tic))
 
-            y_est = est.predict(X_test)
+            y_est = estimator.model.predict(X_test)
 
             err = np.absolute(y_est - y_test)
             rel_err = np.absolute(np.divide(y_est - y_test, y_test))
@@ -48,7 +72,7 @@ def annStructureTest():
 
             ax_list[sample_idx, estimator_idx].scatter(X_test, y_est, color="r")
             ax_list[sample_idx, estimator_idx].plot(X, y)
-            ax_list[sample_idx, estimator_idx].set_title(descriptions[estimator_idx])
+            ax_list[sample_idx, estimator_idx].set_title(estimator.name)
             ax_list[sample_idx, estimator_idx].set_xlabel(
                 r"$\epsilon_\mu=${:.2f} $\epsilon_{{max}}=${:.2f}".format(np.mean(err), np.max(err))
             )
@@ -56,7 +80,7 @@ def annStructureTest():
     plt.tight_layout()
 
 
-def extrapolationTest():
+def extrapolation_test():
     num_samples = 1e5
     est = MLPRegressor(hidden_layer_sizes=(50, 50), learning_rate_init=0.01, early_stopping=True)
 
@@ -93,7 +117,7 @@ def extrapolationTest():
     plt.tight_layout()
 
 
-def interpolationTest():
+def interpolation_test():
     num_samples = 1e5
     est = MLPRegressor(hidden_layer_sizes=(50, 50), learning_rate_init=0.01, early_stopping=True)
 
@@ -133,7 +157,7 @@ def interpolationTest():
     plt.tight_layout()
 
 
-def dimensionTest():
+def dimension_test():
     num_samples = 1e5
     est = MLPRegressor(hidden_layer_sizes=(50, 50), learning_rate_init=0.01, early_stopping=True)
 
@@ -181,24 +205,24 @@ def dimensionTest():
     plt.tight_layout()
 
 
-def allTests():
-    annStructureTest()
-    extrapolationTest()
-    interpolationTest()
-    dimensionTest()
+def all_tests():
+    ann_structure_test()
+    extrapolation_test()
+    interpolation_test()
+    dimension_test()
 
 
-def notImplemented():
+def not_implemented():
     print("Test mode not yet implemented.")
 
 
 def main(test_mode):
     modes = {
-        "basic": annStructureTest,
-        "extrap": extrapolationTest,
-        "interp": interpolationTest,
-        "dim": dimensionTest,
-        "all": allTests,
+        "basic": ann_structure_test,
+        "extrap": extrapolation_test,
+        "interp": interpolation_test,
+        "dim": dimension_test,
+        "all": all_tests,
     }
 
     modes[test_mode]()
