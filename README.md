@@ -1,5 +1,5 @@
 # ANN Tester
-This module runs several tests on a multilayer perceptron (MLP) regression fit.  MLP's have been theoretically proven able to reproduce continuous functions within an arbitrarily small epsilon.  These tests are designed to empirically study the amount of training data required to reproduce various functions and the interaction with the number of "neurons" and layers in the MLP.  Also of interest is the extensibility of ANN models for extrapolation or interpolation of "voids" in the training data.
+This module runs several tests on a multilayer perceptron (MLP) regression fit.  MLP's have been [theoretically proven](https://en.wikipedia.org/wiki/Universal_approximation_theorem) to be capable of reproducing continuous functions within an arbitrarily small epsilon.  However, the mere existance of a solution is wholly inadequate in practice, because we need to find the correct weights in a search space using stochastic gradient descent, and we do not have the benefit of arbitrary width and depth of neurons in the network.  These tests are designed to empirically study the amount of training data required to reproduce various functions and the interaction with the number of "neurons" and layers in the MLP.  Also of interest is the extensibility of ANN models for extrapolation or interpolation of "voids" in the training data.
 
 ## Installation
 ```
